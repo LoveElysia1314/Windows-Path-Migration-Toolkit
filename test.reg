@@ -1,0 +1,41 @@
+Windows Registry Editor Version 5.00
+
+; 🔧 测试根键：用户级，安全隔离
+[HKEY_CURRENT_USER\SOFTWARE\TestDriveFix]
+
+; ✅ 标准路径（应被匹配）
+"StandardPath"="E:\\TestApp\\bin.exe"
+
+; ✅ 带引号路径（应被匹配）
+"QuotedPath"="\"E:\\TestApp\\launcher.exe\""
+
+; ✅ 带命令行参数（应匹配两处 E:）
+"CmdArgs"="E:\\TestApp\\main.exe --config E:\\TestApp\\config.ini"
+
+; ✅ PATH风格（分号分隔，应匹配中间项）
+"PathEnv"="C:\\Windows;E:\\TestApp\\bin;D:\\Other"
+
+; ✅ 等号赋值风格（应匹配）
+"ConfigRef"="DataPath=E:\\TestApp\\data"
+
+; ✅ 带单引号（应匹配）
+"SingleQuote"="'E:\\TestApp\\log.txt'"
+
+; ✅ 路径结尾无斜杠（应匹配）
+"RootRef"="E:"
+
+; ❌ URI协议（不应匹配 - 关键测试点）
+"UriResource"="ms-resource://Microsoft.TestApp/Resources/Icon"
+"UriHttp"="http://E:/share/file.zip"
+"UriFile"="file://E:/network/path"
+
+; ❌ 单词内嵌（不应匹配）
+"WordEmbed"="The resource:E: is not a path"
+"FileExt"="EXE: executable format"
+
+; ❌ 已为 D 盘（不应匹配）
+"AlreadyD"="D:\\TestApp\\bin.exe"
+
+; ✅ 混合大小写（应匹配）
+"LowerCase"="e:\\testapp\\lower.exe"
+"UpperCase"="E:\\TESTAPP\\UPPER.EXE"
